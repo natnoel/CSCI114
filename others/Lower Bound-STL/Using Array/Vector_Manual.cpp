@@ -3,23 +3,24 @@
 using namespace std;
 
 int getLowerBound(const vector<int> &vect, const int &val) {
-	int left = 0, right = vect.size() - 1, mid = 0;
+	int left = 0, right = vect.size() - 1;
 
 	while (left < right) {
-		mid = (left + right) / 2;
+		int mid = (left + right) / 2;
 		cout << "left: " << left << " right: " << right << " mid: " << mid << endl;
 		if (vect[mid] < val) {
 			// All we need is on the right side (>= val)
 			left = mid + 1;
+			cout << "new left: " << left << endl;
 		}
 		else {
 			// vect[mid] >= val
 			right = mid;	// Inclusive of mid
+			cout << "new right: " << right << endl;
 		}
-		cout << "new mid: " << mid << endl;
 	}
 
-	return mid;
+	return left;
 }
 
 int main() {
