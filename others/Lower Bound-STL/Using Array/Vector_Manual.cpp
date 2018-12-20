@@ -1,9 +1,10 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 int getLowerBound(const vector<int> &vect, const int &val) {
-	int left = 0, right = vect.size() - 1;
+	int left = 0, right = vect.size();
 
 	while (left < right) {
 		int mid = (left + right) / 2;
@@ -23,6 +24,15 @@ int getLowerBound(const vector<int> &vect, const int &val) {
 	return left;
 }
 
+/*int getLowerBound_IteratorMethod(const vector<int> &vect, const int &val) {
+	vector<int>::const_iterator it;
+
+	for (it = vect.begin(); it != vect.end(); it++)
+		cout << *it << ' ';
+
+	return 0;
+}*/
+
 int main() {
 	int N;	// Number of integers
 	vector<int> vect;
@@ -35,13 +45,17 @@ int main() {
 		//cout << num << ' ';
 	}
 
+	//cout << "Distance: " << distance(vect.begin(), vect.end()) << endl;
+	//getLowerBound_IteratorMethod(vect, 0);
+
 	int Q;	// Number of queries
 	cin >> Q;
 
 	while (Q--) {
 		int Y;	// Number to search for
 		cin >> Y;
-		cout << getLowerBound(vect, Y) << endl;
+		cout << "lower bound is (own method): " << getLowerBound(vect, Y) << endl;
+		cout << "lower bound is: " << lower_bound(vect.begin(), vect.end(), Y) - vect.begin() << endl;
 	}
 
 	return 0;
