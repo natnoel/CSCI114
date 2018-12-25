@@ -24,14 +24,31 @@ int getLowerBound(const vector<int> &vect, const int &val) {
 	return left;
 }
 
-/*int getLowerBound_IteratorMethod(const vector<int> &vect, const int &val) {
-	vector<int>::const_iterator it;
+vector<int>::const_iterator getLowerBoundIterator(const vector<int> &v, const int &val) {
+	vector<int>::const_iterator it = v.begin();
+	int count = distance(v.begin(), v.end());
 
-	for (it = vect.begin(); it != vect.end(); it++)
-		cout << *it << ' ';
+	//for (it = vect.begin(); it != vect.end(); it++)
+	//	cout << *it << ' ';
 
-	return 0;
-}*/
+	while (count > 0) {
+		int step = count / 2;
+		advance(it, step);
+
+		if (*it < val) {
+			//Everthing is on the right hand side (excluding middle)
+			it++;
+			count -= step + 1;
+		}
+		else
+		{
+			// Everthing is on the left hand side (including middle)
+			count = step;
+		}
+	}
+
+	return it;
+}
 
 int main() {
 	int N;	// Number of integers
