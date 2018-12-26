@@ -5,46 +5,6 @@
 #include <algorithm>
 using namespace std;
 
-class Tag {
-public:
-	string name;
-	map<string, string> attr;
-	vector<Tag*> children;
-};
-
-void createTagTree(vector<pair<string, string>> &tags, int N, string tagName) {
-	if (N == 0)
-		return;
-
-	string name;
-	cin >> name;
-
-	if (name[1] != '/') {
-		//Opening tag
-
-		//Remove the opening and closing triangle brackets
-		name.erase(std::remove(name.begin(), name.end(), '<'),
-			name.end());
-		name.erase(std::remove(name.begin(), name.end(), '>'),
-			name.end());
-
-		if (tagName.empty()) {
-			tagName = name;
-		}
-		else {
-			tagName.append(".").append(name);
-		}
-
-		string attr, eq, val;
-		do {
-			cin >> attr;
-			if (attr.compare(">") == 0)
-				// No attributes
-				
-				break;
-		} while (val.back() != '>');
-	}
-}
 
 void eraseSubStr(std::string & mainStr, const std::string & toErase)
 {
@@ -59,7 +19,6 @@ void eraseSubStr(std::string & mainStr, const std::string & toErase)
 }
 
 int main() {
-	cout << "Hello attr\n";
 	int N, Q;
 	map<string, string> tags;
 	cin >> N >> Q;
@@ -84,7 +43,7 @@ int main() {
 				//Child tag
 				tagName.append(".").append(name);
 			}
-			cout << "Tagname is: " << tagName << endl;
+			//cout << "Tagname is: " << tagName << endl;
 
 			string attr, eq, rawVal;
 			do {
@@ -93,8 +52,8 @@ int main() {
 				if (attr.compare(">") == 0) {
 					// No attributes
 					// Add empty attr
-					cout << "Empty tag\n";
-					cout << "Added attr: " << tagName << "=" << val << endl;
+					//cout << "Empty tag\n";
+					//cout << "Added attr: " << tagName << "=" << val << endl;
 					tags.insert(make_pair(tagName, ""));
 				}
 				else {
@@ -106,7 +65,7 @@ int main() {
 					val.erase(std::remove(val.begin(), val.end(), '>'),
 						val.end());
 
-					cout << "Added attr: " << tagName << "=" << val << endl;
+					//cout << "Added attr: " << tagName << "=" << val << endl;
 					tags.insert(make_pair(tagName, val));
 					eraseSubStr(tagName, "~" + attr);
 				}
@@ -135,7 +94,12 @@ int main() {
 
 	while (Q--) {
 		cin >> tagName;
-		cout << tags[tagName] << endl;
+		map<string, string>::iterator it = tags.find(tagName);
+		if (it == tags.end())
+			cout << "Not Found!";
+		else
+			cout << it->second;
+		cout << endl;
 	}
 	return 0;
 }
