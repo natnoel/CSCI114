@@ -63,7 +63,8 @@ public:
 
 				//Take care or before and after nodes pointing to it
 				n->prev->next = n->next;
-				n->next->prev = n->prev;
+				if (n != tail)
+					n->next->prev = n->prev;
 
 				//Take care of n and head pointers
 				n->next = head;
@@ -72,10 +73,10 @@ public:
 				head = n;
 			}
 		}
-		//cout << "Size is now " << mp.size() << endl;
-		printNodes();
+		cout << "Size is now " << mp.size() << endl;
+		//printNodes();
 		printMap();
-		printNodesReverse();
+		//printNodesReverse();
 	}
 
 	int get(int k) {
