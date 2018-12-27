@@ -65,16 +65,6 @@ public:
 			else {   //If already in cache, change position to head
 				Node *n = it->second;
 				//cout << "Changing pos to head\n";
-				//Take care or before and after nodes pointing to it
-				/*n->prev->next = n->next;
-				if (n != tail)
-					n->next->prev = n->prev;
-
-				//Take care of n and head pointers
-				n->next = head;
-				head->prev = n;
-				n->prev = NULL;
-				head = n;*/
 
 				//Update new value
 				n->value = v;
