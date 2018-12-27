@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <set>
 #include <cassert>
+#include <fstream>
 using namespace std;
 
 struct Node {
@@ -32,11 +33,12 @@ class LRUCache : public Cache {
 public:
 	LRUCache(int cap) {
 		cp = cap;
+		head = tail = NULL;
 	};
 
 	void set(int k, int v) {
 		if (head == NULL) { //If nothing in cache
-			cout << "Entered head == NULL\n";
+			//cout << "Entered head == NULL\n";
 			head = new Node(k, v);
 			tail = head;
 			mp.insert(make_pair(k, head));
@@ -45,12 +47,14 @@ public:
 			map<int, Node*>::iterator it = mp.find(k);
 
 			if (it == mp.end()) {    //If not in cache, add head
+				//cout << "Adding new node\n";
 				Node* n = new Node(NULL, head, k, v);
 				head->prev = n;
 				head = n;
 				mp.insert(make_pair(k, n));
 
 				if (mp.size() > cp) {    //If exceed capacity, remove tail
+					//cout << "Removing tail\n";
 					mp.erase(tail->key);
 					Node *dN = tail;
 					tail = tail->prev;
@@ -60,9 +64,9 @@ public:
 			}
 			else {   //If already in cache, change position to head
 				Node *n = it->second;
-
+				//cout << "Changing pos to head\n";
 				//Take care or before and after nodes pointing to it
-				n->prev->next = n->next;
+				/*n->prev->next = n->next;
 				if (n != tail)
 					n->next->prev = n->prev;
 
@@ -70,12 +74,34 @@ public:
 				n->next = head;
 				head->prev = n;
 				n->prev = NULL;
-				head = n;
+				head = n;*/
+
+				//Update new value
+				n->value = v;
+
+				if (head != n) {
+					//Connect the before and after
+					n->prev->next = n->next;
+					if (n->next != NULL)	//If there is something after
+						n->next->prev = n->prev;
+
+					//Update the node's pointers
+					n->prev = head->prev;	//a null
+					n->next = head;
+
+					//Update the previous head's pointer
+					head->prev = n;
+
+					//New head
+					head = n;
+				}
+				//else
+					//cout << "Already at head\n";
 			}
 		}
-		cout << "Size is now " << mp.size() << endl;
+		//cout << "Size is now " << mp.size() << endl;
 		//printNodes();
-		printMap();
+		//printMap();
 		//printNodesReverse();
 	}
 
@@ -118,6 +144,8 @@ int main() {
 	int n, capacity, i;
 	cin >> n >> capacity;
 	LRUCache l(capacity);
+	ofstream file;
+	file.open("output.txt");
 	for (i = 0; i < n; i++) {
 		string command;
 		cin >> command;
@@ -125,6 +153,7 @@ int main() {
 			int key;
 			cin >> key;
 			cout << l.get(key) << endl;
+			file << l.get(key) << endl;
 		}
 		else if (command == "set") {
 			int key, value;
@@ -132,5 +161,6 @@ int main() {
 			l.set(key, value);
 		}
 	}
+	file.close();
 	return 0;
 }
