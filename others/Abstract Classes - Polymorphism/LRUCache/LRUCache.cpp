@@ -36,6 +36,7 @@ public:
 
 	void set(int k, int v) {
 		if (head == NULL) { //If nothing in cache
+			cout << "Entered head == NULL\n";
 			head = new Node(k, v);
 			tail = head;
 			mp.insert(make_pair(k, head));
@@ -53,6 +54,7 @@ public:
 					mp.erase(tail->key);
 					Node *dN = tail;
 					tail = tail->prev;
+					tail->next = NULL;
 					delete dN;
 				}
 			}
@@ -70,6 +72,10 @@ public:
 				head = n;
 			}
 		}
+		//cout << "Size is now " << mp.size() << endl;
+		printNodes();
+		printMap();
+		printNodesReverse();
 	}
 
 	int get(int k) {
@@ -78,6 +84,32 @@ public:
 			return -1;
 		else
 			return it->second->value;
+	}
+
+	void printNodes()
+	{
+		Node *n = head;
+		while (n != NULL) {
+			cout << "(" << n->key << "," << n->value << ") ";
+			n = n->next;
+		}
+		cout << endl;
+	}
+
+	void printNodesReverse()
+	{
+		Node *n = tail;
+		while (n != NULL) {
+			cout << "(" << n->key << "," << n->value << ") ";
+			n = n->prev;
+		}
+		cout << endl;
+	}
+
+	void printMap() {
+		for (map<int,Node*>::iterator it = mp.begin(); it != mp.end(); it++)
+			cout << "(" << it->first << "," << it->second->value << ") ";
+		cout << endl;
 	}
 };
 
