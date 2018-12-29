@@ -16,7 +16,7 @@ int main() {
 		double C; cin >> C;
 
 		/* Enter your code here */
-		cout << setw(0) << "0x" <<hex << nouppercase << (int)A << endl;
+		cout << setw(0) << "0x" <<hex << nouppercase << (long long)A << endl;
 
 		/*int mantissa = B, noOfDigits = 0;
 		while (mantissa > 0) {
@@ -30,7 +30,7 @@ int main() {
 
 		cout << setw(0) << setprecision(9) << scientific << noshowpos << setfill(' ') << C << endl;
 
-		file << setw(0) << "0x" << std::hex << nouppercase << (int)A << endl;
+		file << setw(0) << "0x" << std::hex << nouppercase << (long long)A << endl;
 		file << setprecision(2) << fixed << showpos << right << setw(15) << setfill('_') << B << endl;
 		file << setw(0) << setprecision(9) << scientific << uppercase << noshowpos << setfill(' ') << C << endl;
 	}
