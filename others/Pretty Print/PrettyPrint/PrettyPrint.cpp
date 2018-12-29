@@ -7,7 +7,7 @@ int main() {
 	int T; cin >> T;
 	cout << setiosflags(ios::uppercase);
 	cout << setw(0xf) << internal;
-	ofstream file("output");
+	ofstream file("output.txt");
 	file << setiosflags(ios::uppercase);
 	file << setw(0xf) << internal;
 	while (T--) {
