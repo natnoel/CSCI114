@@ -4,11 +4,16 @@
 
 using namespace std;
 #include <vector>
+#include <algorithm>
 
 //Define the structs Workshops and Available_Workshops.
 //Implement the functions initialize and CalculateMaxWorkshops
 struct Workshop {
 	int start, end, duration;
+
+	bool operator< (Workshop &ws) {
+		return this->end < ws.end;
+	}
 };
 
 struct Available_Workshops {
@@ -31,8 +36,10 @@ Available_Workshops* initialize(int start_time[], int duration[], int n) {
 }
 
 int maxWorkShops(vector<Workshop> w, int count = 0) {
-	if (w.empty())
+	if (w.empty()) {
+		cout << "Returning " << count << endl;
 		return count;
+	}
 	else {
 		int maxCount = count;
 		for (vector<Workshop>::iterator it = w.begin(); it != w.end(); it++) {    //For each starting/next chosen workshop
@@ -81,7 +88,18 @@ int CalculateMaxWorkshops(Available_Workshops* aw) {
 			v.erase(it);
 		cout << *it << ' ';
 	}*/
-	return maxWorkShops(aw->w, 0);
+	//return maxWorkShops(aw->w, 0);
+
+	sort(aw->w.begin(), aw->w.end());
+	int count = 0, prevEnd = -1;
+	for (vector<Workshop>::iterator it = aw->w.begin(); it != aw->w.end(); it++) {
+		if (it->start >= prevEnd) {
+			count++;
+			prevEnd = it->end;
+		}
+	}
+
+	return count;
 }
 
 int main(int argc, char *argv[]) {
