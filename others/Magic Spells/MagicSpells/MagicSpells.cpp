@@ -89,7 +89,7 @@ void counterspell(Spell *spell) {
 		//cout<<s.substr(4);
 
 		string scrollName = spell->revealScrollName(), journal = SpellJournal::journal;
-		int scrollPos = 0, jPos = 0, count = 0;
+		/*int scrollPos = 0, jPos = 0, count = 0;
 		while (scrollPos < scrollName.length() && !journal.empty()) {
 			int firstOccurPos = journal.find(scrollName[scrollPos]);
 
@@ -100,7 +100,22 @@ void counterspell(Spell *spell) {
 
 			scrollPos++;
 		}
-		cout << count << endl;
+		cout << count << endl;*/
+
+		string s1, s2;
+		for (int i = 0; i < scrollName.size(); i++) {
+			if (journal.find(scrollName[i]) != string::npos) {
+				s1.push_back(scrollName[i]);
+			}
+		}
+
+		for (int i = 0; i < journal.size(); i++) {
+			if (scrollName.find(journal[i]) != string::npos) {
+				s2.push_back(journal[i]);
+			}
+		}
+
+		cout << s1 << endl << s2 << "--------------------------------------" << endl;
 	}
 }
 
