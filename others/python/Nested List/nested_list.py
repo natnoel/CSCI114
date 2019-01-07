@@ -1,32 +1,25 @@
-lowest = sec_lowest = 999
-stud_grades = []
-lowest_stud = sec_lowest_stud = []
-for _ in range(int(raw_input())):
-    name = raw_input()
-    score = float(raw_input())
-    stud_grades.append([name, score])
+if __name__ == '__main__':
+    stud_list = []
+    lowest = sec_lowest = 999
+    for _ in range(int(input())):
+        name = input()
+        score = float(input())
+        stud_list.append([name, score])
 
-    if score < lowest:  # new lowest score
-        sec_lowest = lowest                 # prev lowest becomes second lowest
-        lowest = score                      # update new lowest score
-        if sec_lowest == 999:
+        if score < lowest:
             sec_lowest = lowest
-        sec_lowest_stud = lowest_stud       # list of lowest studs is now list of 2nd lowest stud
-        lowest_stud = []                    # new lowest stud list
-        lowest_stud.append(name)   # add the new entry
-        #print('lowest is now', lowest, "second is", sec_lowest)
-    elif score < sec_lowest:    # new second lowest (but still less than lowest)
-        sec_lowest = score                      # update 2nd lowest score
-        sec_lowest_stud = []                    # discard prev 2nd lowest stud list
-        sec_lowest_stud.append(name)   # add new entry
-        print("second is now", sec_lowest, [name,score])
-    elif score == lowest:
-        lowest_stud.append(name)
-        #print("added lowest another", [name, score])
-    elif score == sec_lowest:   # another sec lowest student
-        sec_lowest_stud.append(name)
-        #print("added 2nd lowest another", [name, score])
+            lowest = score
+        elif score < sec_lowest and score != lowest:
+            sec_lowest = score
+        #print('lowest is:', lowest, 'second is:', sec_lowest)
 
-sec_lowest_stud.sort()
-for name in sec_lowest_stud:
-    print(name)
+    #print('lowest is:', lowest, 'second is:', sec_lowest)
+
+    sec_lowest_studs = []
+    for stud in stud_list:
+        if (sec_lowest == stud[1]):
+            sec_lowest_studs.append(stud[0])
+
+    sec_lowest_studs.sort()
+    for name in sec_lowest_studs:
+        print(name)
